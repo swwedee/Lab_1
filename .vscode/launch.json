@@ -1,0 +1,31 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "C/C++: g++.exe build and debug Lab_1",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "C:\\Work\\vscode\\Lab_1\\main.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "C:\\Work\\vscode\\Lab_1",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "C:\\Programs\\msys64\\ucrt64\\bin\\gdb.exe",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "C/C++: г++.exe build Lab_1"
+        }
+    ]
+}

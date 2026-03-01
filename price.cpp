@@ -1,42 +1,98 @@
+#include <iostream>
+#include <fstream>
+#include <string>
 #include "Price.h"
 
-void Price::add(Price other)
-{
-    hryvnia += other.hryvnia;
-    kopiyka += other.kopiyka;
+using namespace std;
 
-    if (kopiyka >= 100)
+void addPrice(Price a, Price b, Price& result)
+{
+    result.hryvnia = a.hryvnia + b.hryvnia;
+    result.kopiyka = a.kopiyka + b.kopiyka;
+
+   result.hryvnia += result.kopiyka / 100;
+    result.kopiyka %= 100;
+}
+
+void multiplyPrice(Price a, int count, Price& result)
+{
+    result.hryvnia = a.hryvnia * count;
+    result.kopiyka = a.kopiyka * count;
+
+    if (result.kopiyka >= 100)
     {
-        hryvnia += kopiyka / 100;
-        kopiyka = kopiyka % 100;
+        result.hryvnia += result.kopiyka / 100;
+        result.kopiyka = result.kopiyka % 100;
     }
 }
 
-void Price::multiply(int number)
+void roundPrice(Price& a)
 {
-    int totalKop = hryvnia * 100 + kopiyka;
-    totalKop = totalKop * number;
+    int lastDigit = a.kopiyka % 10;
 
-    hryvnia = totalKop / 100;
-    kopiyka = totalKop % 100;
-}
-
-void Price::round()
-{
-    // округлення до 10 копійок
-    if (kopiyka % 10 >= 5)
-        kopiyka = kopiyka + (10 - kopiyka % 10);
+    if (lastDigit >= 8)
+        a.kopiyka += (10 - lastDigit);
     else
-        kopiyka = kopiyka - (kopiyka % 10);
+        a.kopiyka -= lastDigit;
 
-    if (kopiyka >= 100)
+    if (a.kopiyka >= 100)
     {
-        hryvnia++;
-        kopiyka -= 100;
+        a.hryvnia += 1;
+        a.kopiyka = 0;
     }
 }
 
-void Price::print()
+void printPrice(Price a)
 {
-    std::cout << hryvnia << " грн " << kopiyka << " коп" << std::endl;
+    cout << a.hryvnia << " грн " << a.kopiyka << " коп" << endl;
+}
+
+void runProgram()
+{
+    ifstream file("input.txt");
+
+    if (!file.is_open())
+    {
+        cout << "Файл не відкрився!" << endl;
+        return;
+    }
+
+    Price total = {0, 0};
+
+    string name;
+    int grn;
+    short int kop;
+    int count;
+    string temp;
+
+    while (file >> name)
+    {
+        getline(file, temp, ',');
+
+        file >> grn;
+        file >> temp;
+        file >> kop;
+        file >> temp;
+        file >> count;
+        file >> temp;
+
+        Price one = {grn, kop};
+        Price multiplied = {0, 0};
+        Price newTotal = {0, 0};
+
+        multiplyPrice(one, count, multiplied);
+        addPrice(total, multiplied, newTotal);
+
+        total = newTotal;
+    }
+
+    file.close();
+
+    cout << "Загальна сума: ";
+    printPrice(total);
+
+    roundPrice(total);
+
+    cout << "Сума до оплати (після заокруглення): ";
+    printPrice(total);
 }

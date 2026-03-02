@@ -10,8 +10,11 @@ void addPrice(Price a, Price b, Price& result)
     result.hryvnia = a.hryvnia + b.hryvnia;
     result.kopiyka = a.kopiyka + b.kopiyka;
 
-   result.hryvnia += result.kopiyka / 100;
-    result.kopiyka %= 100;
+    if (result.kopiyka >= 100)
+    {
+        result.hryvnia++;
+        result.kopiyka -= 100;
+    }    
 }
 
 void multiplyPrice(Price a, int count, Price& result)
@@ -19,10 +22,10 @@ void multiplyPrice(Price a, int count, Price& result)
     result.hryvnia = a.hryvnia * count;
     result.kopiyka = a.kopiyka * count;
 
-    if (result.kopiyka >= 100)
+ if (result.kopiyka >= 100)
     {
-        result.hryvnia += result.kopiyka / 100;
-        result.kopiyka = result.kopiyka % 100;
+        result.hryvnia++;
+        result.kopiyka -= 100;
     }
 }
 
@@ -37,8 +40,8 @@ void roundPrice(Price& a)
 
     if (a.kopiyka >= 100)
     {
-        a.hryvnia += 1;
-        a.kopiyka = 0;
+        a.hryvnia ++;
+        a.kopiyka -= 100;
     }
 }
 
@@ -51,12 +54,6 @@ void runProgram()
 {
     ifstream file("input.txt");
 
-    if (!file.is_open())
-    {
-        cout << "Файл не відкрився!" << endl;
-        return;
-    }
-
     Price total = {0, 0};
 
     string name;
@@ -67,23 +64,22 @@ void runProgram()
 
     while (file >> name)
     {
-        getline(file, temp, ',');
+       file >> name;
+       file >> name;
 
-        file >> grn;
-        file >> temp;
-        file >> kop;
-        file >> temp;
-        file >> count;
-        file >> temp;
+       file >> grn;
+       file >> name;
+       file >> kop;
+       file >> name;
+       file >> count;
+       file >> name;
 
         Price one = {grn, kop};
         Price multiplied = {0, 0};
-        Price newTotal = {0, 0};
+        
 
         multiplyPrice(one, count, multiplied);
-        addPrice(total, multiplied, newTotal);
-
-        total = newTotal;
+        addPrice(total, multiplied,total);
     }
 
     file.close();

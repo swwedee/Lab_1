@@ -7,13 +7,13 @@ struct Price
     short int kopiyka;
 };
 
-// операції
+
 void addPrice(Price a, Price b, Price& result);
 void multiplyPrice(Price a, int count, Price& result);
 void roundPrice(Price& a);
 void printPrice(Price a);
 
-// основна функція програми
+
 void runProgram();
 
 #endif

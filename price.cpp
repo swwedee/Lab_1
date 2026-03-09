@@ -23,7 +23,11 @@ void multiplyPrice(Price a, int count, Price& result)
     result.hryvnia = a.hryvnia * count;
     result.kopiyka = a.kopiyka * count;
 
+
  while (result.kopiyka >= 100)
+
+ while(result.kopiyka >= 100)
+
     {
         result.hryvnia++;
         result.kopiyka -= 100;
@@ -66,11 +70,18 @@ void runProgram()
 
     while (file >> name)
     {
+
+
+
+
        file >> grn;
        file >> kop;
        file >> count;
         
+
        
+
+
 
         Price one = {grn, kop};
         Price multiplied = {0, 0};

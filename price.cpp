@@ -10,7 +10,7 @@ void addPrice(Price a, Price b, Price& result)
     result.hryvnia = a.hryvnia + b.hryvnia;
     result.kopiyka = a.kopiyka + b.kopiyka;
 
-    if (result.kopiyka >= 100)
+    while (result.kopiyka >= 100)
     {
         result.hryvnia++;
         result.kopiyka -= 100;
@@ -22,7 +22,7 @@ void multiplyPrice(Price a, int count, Price& result)
     result.hryvnia = a.hryvnia * count;
     result.kopiyka = a.kopiyka * count;
 
- if (result.kopiyka >= 100)
+ while(result.kopiyka >= 100)
     {
         result.hryvnia++;
         result.kopiyka -= 100;

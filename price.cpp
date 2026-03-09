@@ -64,15 +64,11 @@ void runProgram()
 
     while (file >> name)
     {
-       file >> name;
-       file >> name;
-
        file >> grn;
-       file >> name;
        file >> kop;
-       file >> name;
        file >> count;
-       file >> name;
+        
+       
 
         Price one = {grn, kop};
         Price multiplied = {0, 0};
